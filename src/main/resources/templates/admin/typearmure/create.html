@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Create</title>
+</head>
+<nav th:replace="mesFragments :: fragNav"></nav>
+<main class="container"><body>
+<div class="row col-10 col-sm-8 col-md-6 col-lg-4 mx-auto mt-3">
+    <form novalidate class="validation"  th:action="@{/admin/typeArmure}" th:object="${nouveauTypeArmure}" method="post">
+        <h2 class="mb-4">Ajouter un type d'armure</h2>
+        <!-- Input pour le nom du type d'armure -->
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom du type d'armure</label>
+            <input required minlength="3" maxlength="255" type="text" class="form-control" id="nom" name="nom"  th:field="${nouveauTypeArmure.nom}">
+        </div>
+
+        <div class="mb-3">
+            <label for="bonusType" class="form-label">bonusType du type d'armure</label>
+            <input required min="0" max="99" Type="number" class="form-control" id="bonusType" name="bonusType"  th:field="${nouveauTypeArmure.nom}">
+        </div>
+
+        <!-- Bouton de soumission -->
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+<script src="/js/validation.js"></script>
+</body>
+    </main>

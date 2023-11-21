@@ -97,6 +97,25 @@ class QualiteController(val qualiteDao: QualiteDao) {
      * @return La redirection vers la page d'administration des qualités après la suppression réussie.
      * @throws NoSuchElementException si la qualité avec l'ID spécifié n'est pas trouvée dans la base de données.
      */
+    @PostMapping("/admin/qualite/update")
+    fun update(@ModelAttribute qualite: Qualite, redirectAttributes: RedirectAttributes): String {
+        // Recherche de la qualité existante dans la base de données
+        val qualiteModifier = this.qualiteDao.findById(qualite.id ?: 0).orElseThrow()
+
+        // Mise à jour des propriétés de la qualité avec les nouvelles valeurs du formulaire
+        qualiteModifier.nom = qualite.nom
+        qualiteModifier.couleur = qualite.couleur
+        qualiteModifier.bonusQualite = qualite.bonusQualite
+
+        // Sauvegarde la qualité modifiée dans la base de données
+        val savedQualite = this.qualiteDao.save(qualiteModifier)
+
+        // Ajoute un message de succès pour être affiché à la vue suivante
+        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedQualite.nom} réussie")
+
+        // Redirige vers la page d'administration des qualités
+        return "redirect:/admin/qualite"
+    }
     @PostMapping("/admin/qualite/delete")
     fun delete(@RequestParam id: Long, redirectAttributes: RedirectAttributes): String {
         // Recherche de la qualité à supprimer dans la base de données
