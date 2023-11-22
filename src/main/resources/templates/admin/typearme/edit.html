@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit</title>
 </head>
-<body>
+<nav th:replace="mesFragments :: fragNav"></nav>
+<main class="container">
+<div class="row col-10 col-sm-8 col-md-6 col-lg-4 mx-auto mt-3">
 
-</body>
-</html>
+    <form novalidate class="validation"  th:action="@{/admin/typeArme/update}" th:object="${LeTypeArmeEdit}" method="post">
+        <h2 class="mb-4">Modification d'un type d'arme</h2>
+        <!-- Input pour l'id du type arme -->
+        <input readonly required type="hidden" name="id" th:field="${LeTypeArmeEdit.id}">
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom du type d'arme</label>
+            <input required minlength="3" maxlength="255" type="text" class="form-control" id="nom" name="nom"  th:field="${LeTypeArmeEdit.nom}">
+        </div>
+
+        <!-- Input pour le nombre de dés -->
+        <div class="mb-3">
+            <label for="nombreDes" class="form-label">Nombre Des</label>
+            <input required min="0" max="99" type="number" class="form-control" id="nombreDes" name="nombreDes"  th:field="${LeTypeArmeEdit.nombreDes}">
+        </div>
+
+        <!-- Input pour la valeur dé maximum-->
+        <div class="mb-3">
+            <label for="valeurDeMax" class="form-label">Valeur Dé Max</label>
+            <input required min="0" max="99" type="number" class="form-control" id="valeurDeMax" name="valeurDeMax" th:field="${LeTypeArmeEdit.valeurDeMax}">
+        </div>
+
+        <!-- Input pour le multiplicateur critique-->
+        <div class="mb-3">
+            <label for="multiplicateurCritique" class="form-label">Multiplicateur critique</label>
+            <input required min="0" max="99" type="number" class="form-control" id="multiplicateurCritique" name="multiplicateurCritique" th:field="${LeTypeArmeEdit.multiplicateurCritique}">
+        </div>
+
+        <!-- Input pour l'activation critique-->
+        <div class="mb-3">
+            <label for="activationCritique" class="form-label">Activation Critique</label>
+            <input required min="0" max="99" type="number" class="form-control" id="activationCritique" name="activationCritique" th:field="${LeTypeArmeEdit.activationCritique}">
+        </div>
+
+        <!-- Bouton de soumission -->
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+<script src="/js/validation.js"></script>
+</main>

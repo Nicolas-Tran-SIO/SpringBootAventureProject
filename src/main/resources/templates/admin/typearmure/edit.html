@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create</title>
 </head>
-<body>
-
-</body>
-</html>
+<nav th:replace="mesFragments :: fragNav"></nav>
+<main class="container">
+<div class="row col-10 col-sm-8 col-md-6 col-lg-4 mx-auto mt-3">
+    <form novalidate class="validation"  th:action="@{/admin/typeArmure/update}" th:object="${LeTypeArmureEdit}" method="post">
+        <h2 class="mb-4">Modification d'un type d'armure</h2>
+        <!-- Input pour l'id du type armure -->
+        <input readonly required type="hidden" name="id" th:field="${LeTypeArmureEdit.id}">
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom du type d'armure</label>
+            <input required minlength="3" maxlength="255" type="text" class="form-control" id="nom" name="nom"  th:field="${LeTypeArmureEdit.nom}">
+        </div>
+        <div class="mb-3">
+            <label for="bonusType" class="form-label">Bonus du type d'armure</label>
+            <input required min="0" max="99" type="number" class="form-control" id="bonusType" name="bonusType"  th:field="${LeTypeArmureEdit.bonusType}">
+        </div>
+        <!-- Bouton de soumission -->
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+<script src="/js/validation.js"></script>
+</main>>

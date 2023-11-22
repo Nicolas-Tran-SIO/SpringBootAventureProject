@@ -1,6 +1,5 @@
 package sio.springbootaventureproject.controller.model.entity
 import jakarta.persistence.*
-
 @Entity
 class Qualite constructor(
     @Id
@@ -9,8 +8,13 @@ class Qualite constructor(
     var id: Long? = null,
     var nom: String,
     var couleur: String,
-    var bonusQualite: Int
-    //Todo Mission 3 ajoutez les associations
-    ){
+    var bonusQualite: Int,
+    //Association entre Qualite et Arme
+    //Une qualite peut avoir plusieurs armes
+    @OneToMany(mappedBy = "qualite", cascade = [CascadeType.REMOVE])
+    var armes: MutableList<Arme> = mutableListOf(),
+    //TODO Ajouter les  autres associations
+
+){
 
 }

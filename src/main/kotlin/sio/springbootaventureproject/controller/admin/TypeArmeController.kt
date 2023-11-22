@@ -2,10 +2,7 @@ package sio.springbootaventureproject.controller.admin
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import sio.springbootaventureproject.controller.model.dao.TypeArmeDao
 import sio.springbootaventureproject.controller.model.entity.TypeArme
@@ -34,7 +31,7 @@ class TypeArmeController(val typeArmeDao:TypeArmeDao) {
         // Récupère la qualité avec l'ID spécifié depuis la base de données
         val unTypeArme = this.typeArmeDao.findById(id).orElseThrow()
 
-        // Ajoute la qualité au modèle pour affichage dans la vue
+        // Ajoute le type arme au modèle pour affichage dans la vue
         model.addAttribute("LetypeArme", unTypeArme)
 
         // Retourne le nom de la vue à afficher
@@ -60,4 +57,51 @@ class TypeArmeController(val typeArmeDao:TypeArmeDao) {
         // Redirige vers la page d'administration des types d'armes
         return "redirect:/admin/typeArme"
     }
+    @GetMapping("/admin/typeArme/{id}/edit")
+    fun edit(@PathVariable id: Long, model: Model): String {
+        // Récupère la qualité avec l'ID spécifié depuis la base de données
+        val unTypeArmeEdit = this.typeArmeDao.findById(id).orElseThrow()
+
+        // Ajoute le type arme au modèle pour affichage dans la vue
+        model.addAttribute("LeTypeArmeEdit", unTypeArmeEdit)
+
+        // Retourne le nom de la vue à afficher
+        return "admin/typearme/edit"
+    }
+    @PostMapping("/admin/typeArme/update")
+    fun update(@ModelAttribute LeTypeArmeEdit: TypeArme, redirectAttributes: RedirectAttributes): String {
+        // Recherche de le type arme existante dans la base de données
+        val typeArmeModifier = this.typeArmeDao.findById(LeTypeArmeEdit.id ?: 0).orElseThrow()
+
+        // Mise à jour des propriétés de la qualité avec les nouvelles valeurs du formulaire
+        typeArmeModifier.nom = LeTypeArmeEdit.nom
+        typeArmeModifier.nombreDes = LeTypeArmeEdit.nombreDes
+        typeArmeModifier.valeurDeMax = LeTypeArmeEdit.valeurDeMax
+        typeArmeModifier.multiplicateurCritique = LeTypeArmeEdit.multiplicateurCritique
+        typeArmeModifier.activationCritique = LeTypeArmeEdit.activationCritique
+
+        // Sauvegarde la qualité modifiée dans la base de données
+        val savedQualite = this.typeArmeDao.save(typeArmeModifier)
+
+        // Ajoute un message de succès pour être affiché à la vue suivante
+        redirectAttributes.addFlashAttribute("msgSuccess", "Modification de ${savedQualite.nom} réussie")
+
+        // Redirige vers la page d'administration des qualités
+        return "redirect:/admin/typeArme"
+    }
+    @PostMapping("/admin/typeArme/delete")
+    fun delete(@RequestParam id: Long, redirectAttributes: RedirectAttributes): String {
+        // Recherche de la qualité à supprimer dans la base de données
+        val typeArme: TypeArme = this.typeArmeDao.findById(id).orElseThrow()
+
+        // Suppression de la qualité de la base de données
+        this.typeArmeDao.delete(typeArme)
+
+        // Ajoute un message de succès pour être affiché à la vue suivante
+        redirectAttributes.addFlashAttribute("msgSuccess", "Suppression de ${typeArme.nom} réussie")
+
+        // Redirige vers la page d'administration des qualités
+        return "redirect:/admin/typeArme"
+    }
+
 }

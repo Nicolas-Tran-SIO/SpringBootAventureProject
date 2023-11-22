@@ -3,5 +3,5 @@ package sio.springbootaventureproject.controller.model.dao
 import org.springframework.data.jpa.repository.JpaRepository
 import sio.springbootaventureproject.controller.model.entity.TypeAccessoire
 
-interface AccessoireDao: JpaRepository<TypeAccessoire, Long> {
+interface TypeAccessoireDao: JpaRepository<TypeAccessoire, Long> {
 }

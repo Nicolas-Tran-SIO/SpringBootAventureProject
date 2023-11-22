@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head th:replace="mesFragments :: fragHead">
+    <meta charset="UTF-8">
+    <title>Modification d'accessoire - Kotlin Adventure</title>
+</head>
+<body>
+<nav th:replace="mesFragments :: fragNav"></nav>
+<main class="container">
+<div class="row col-10 col-sm-8 col-md-6 col-lg-4 mx-auto mt-3">
+
+    <form novalidate class="validation" th:action="@{/admin/typeAccessoire/update}" th:object="${LeTypeAccessoireEdit}" method="post">
+        <h2 class="mb-4">Modification d'un accessoire</h2>
+        <!-- Input pour l'id de l'accessoire -->
+        <input readonly required type="hidden" name="id" th:field="${LeTypeAccessoireEdit.id}">
+        <!-- Input pour le nom de l'accessoire -->
+        <div class="mb-3">
+            <label for="nom" class="form-label">Nom de l'accessoire</label>
+            <input required minlength="3" maxlength="255" type="text" class="form-control" id="nom" name="nom"  th:field="${LeTypeAccessoireEdit.nom}">
+        </div>
+
+        <!-- Input pour le bonus de l'accessoire -->
+        <div class="mb-3">
+            <label for="typeBonus" class="form-label">Bonus de l'accessoire</label>
+            <input required min="0" max="99" type="number" class="form-control" id="typeBonus" name="Type bonus" th:field="${LeTypeAccessoireEdit.typeBonus}">
+        </div>
+
+        <!-- Bouton de soumission -->
+        <button type="submit" class="btn btn-primary">Modifier</button>
+    </form>
+</div>
+<footer th:replace="mesFragments :: fragFooter"></footer>
+<script src="/js/validation.js"></script>
+</main>
+</body></html>

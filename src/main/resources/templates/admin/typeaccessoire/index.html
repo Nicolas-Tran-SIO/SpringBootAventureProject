@@ -2,7 +2,7 @@
 <html lang="fr">
 <head th:replace="mesFragments :: fragHead">
     <meta charset="UTF-8">
-    <title>Gestion des accessoires - Kotlin Adventure</title>
+    <title>Gestion des types accessoires - Kotlin Adventure</title>
 </head>
 <body>
 <div class="vh-100">
@@ -11,7 +11,7 @@
     <main class="container">
         <h1>Gestion des accesoires :</h1>
         <div >
-            <a th:href="@{'/admin/accessoire/create'}" class="btn btn-success">
+            <a th:href="@{'/admin/typeAccessoire/create'}" class="btn btn-success">
                 Ajouter un accessoire
             </a>
         </div>
@@ -24,19 +24,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="unAccessoire : ${listAccessoire}">
-                <td th:text="${unAccessoire.nom}"></td>
-                <td th:text="${unAccessoire.typeBonus}"></td>
+            <tr th:each="unTypeAccessoire : ${listTypeAccessoire}">
+                <td th:text="${unTypeAccessoire.nom}"></td>
+                <td th:text="${unTypeAccessoire.typeBonus}"></td>
                 <td class="d-flex">
-                    <a th:href="@{'/admin/accessoire/'+${unAccessoire.id}+'/edit'}" class="btn btn-warning">
+                    <a th:href="@{'/admin/typeAccessoire/'+${unTypeAccessoire.id}+'/edit'}" class="btn btn-warning">
                         Modifier
                     </a>
-                    <a th:href="@{'/admin/accessoire/'+${unAccessoire.id}}" class="btn btn-primary">
+                    <a th:href="@{'/admin/typeAccessoire/'+${unTypeAccessoire.id}}" class="btn btn-primary">
                         Consulter
                     </a>
                     <div>
-                        <form th:action="@{'/admin/accessoire/delete'}" method="post">
-                            <input type="hidden" name="id" th:value="${unAccessoire.id}">
+                        <form th:action="@{'/admin/typeAccessoire/delete'}" method="post">
+                            <input type="hidden" name="id" th:value="${unTypeAccessoire.id}">
                             <button class="btn btn-danger">Supprimer</button>
                         </form>
                     </div>

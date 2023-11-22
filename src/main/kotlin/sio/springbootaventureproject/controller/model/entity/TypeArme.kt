@@ -9,9 +9,9 @@ class TypeArme constructor(
     @Column(name = "id", nullable = false)
     var id: Long? = null,
     var nom:String,
-    val nombreDes: Int,
-    val valeurDeMax: Int,
-    val multiplicateurCritique:Int,
-    val activationCritique:Int
+    var nombreDes: Int,
+    var valeurDeMax: Int,
+    var multiplicateurCritique:Int,
+    var activationCritique:Int
 ) {
 }
