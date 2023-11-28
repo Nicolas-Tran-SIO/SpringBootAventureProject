@@ -8,6 +8,9 @@ class TypeArmure constructor(
     @Column(name = "id", nullable = false)
     var id: Long? = null,
     var nom: String,
-    var bonusType: Int
+    var bonusType: Int,
+
+    @OneToMany(mappedBy = "armures")
+    var armures: List<Armure>?= mutableListOf()
 ){
 }

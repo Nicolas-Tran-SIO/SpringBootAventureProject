@@ -3,7 +3,7 @@ package sio.springbootaventureproject.controller.model.entity
 import jakarta.persistence.DiscriminatorValue
 import jakarta.persistence.Entity
 
-class Potion {
+
     // Déclare la classe comme une entité JPA.
     @Entity
 // Spécifie la valeur du discriminateur associée à cette sous-classe.
@@ -24,9 +24,9 @@ class Potion {
         // La propriété spécifique à la potion, le soin qu'elle procure
         val soin: Int
 
-    ) : item.Item(id, nom, description,cheminImage) {
+    ) : Item(id, nom, description,cheminImage) {
         // TODO Sprint 5 : méthode à implémenter pour la fonctionnalité "utiliser"
     }
 
-}
+
 

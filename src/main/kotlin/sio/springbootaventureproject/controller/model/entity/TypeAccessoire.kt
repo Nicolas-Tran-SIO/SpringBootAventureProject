@@ -8,6 +8,9 @@ class TypeAccessoire (
     @Column(name = "id", nullable = false)
     var id: Long? = null,
     var nom: String,
-    var typeBonus: String
+    var typeBonus: String,
+
+    @OneToMany(mappedBy = "accessoires")
+    var accessoires: List<Accessoire>?= mutableListOf()
 ) {
 }

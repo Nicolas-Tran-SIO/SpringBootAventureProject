@@ -1,7 +1,7 @@
 package sio.springbootaventureproject.controller.model.dao
 
 import org.springframework.data.jpa.repository.JpaRepository
-import sio.springbootaventureproject.controller.model.entity.Item
+import sio.springbootaventureproject.controller.model.entity.Arme
 
-interface ItemDAO : JpaRepository<Item, Long> {
+interface ArmeDao : JpaRepository<Arme, Long> {
 }

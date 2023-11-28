@@ -12,6 +12,9 @@ class TypeArme constructor(
     var nombreDes: Int,
     var valeurDeMax: Int,
     var multiplicateurCritique:Int,
-    var activationCritique:Int
+    var activationCritique:Int,
+
+    @OneToMany(mappedBy = "armes")
+    var armes: List<Arme>?= mutableListOf()
 ) {
 }

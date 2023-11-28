@@ -2,7 +2,7 @@ package sio.springbootaventureproject.controller.model.entity
 
 import jakarta.persistence.*
 
-class item {
+
     // Utilise l'héritage avec une seule table pour stocker les données de toutes les sous-classes dans la même table.
 // La colonne "discriminateur" est utilisée pour différencier les types d'objets stockés dans la table.
     @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -24,4 +24,4 @@ class item {
         var description: String,
 //Chemin vers l'image de l'item
         var cheminImage:String?
-    )}
+    )
