@@ -29,7 +29,11 @@ class Personnage constructor(
     var accessoire: Accessoire?=null,
 
     @OneToMany(mappedBy = "personnage")
-    val ligneItem: List<LigneInventaire> = mutableListOf()
+    val ligneItem: List<LigneInventaire> = mutableListOf(),
+
+    @ManyToOne
+    @JoinColumn(name = "utilisateurId")
+    var utilisateur: Utilisateur
     ){
 
 }

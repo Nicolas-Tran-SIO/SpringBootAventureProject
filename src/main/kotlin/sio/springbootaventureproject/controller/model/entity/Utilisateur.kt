@@ -13,7 +13,7 @@ class Utilisateur constructor(
     var mdp: String
     ){
 
-    @OneToMany(mappedBy = "personnage")
+    @OneToMany(mappedBy = "utilisateur")
     var personnages: List<Personnage>? = null
 
     @OneToMany(mappedBy = "utilisateur")

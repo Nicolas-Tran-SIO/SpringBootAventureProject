@@ -10,7 +10,7 @@ class TypeArmure constructor(
     var nom: String,
     var bonusType: Int,
 
-    @OneToMany(mappedBy = "armures")
+    @OneToMany(mappedBy = "armuretype")
     var armures: List<Armure>?= mutableListOf()
 ){
 }

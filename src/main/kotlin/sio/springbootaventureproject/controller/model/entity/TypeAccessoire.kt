@@ -10,7 +10,7 @@ class TypeAccessoire (
     var nom: String,
     var typeBonus: String,
 
-    @OneToMany(mappedBy = "accessoires")
+    @OneToMany(mappedBy = "accessoiretype")
     var accessoires: List<Accessoire>?= mutableListOf()
 ) {
 }

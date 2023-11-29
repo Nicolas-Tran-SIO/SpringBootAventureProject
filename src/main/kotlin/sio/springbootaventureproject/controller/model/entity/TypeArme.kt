@@ -14,7 +14,7 @@ class TypeArme constructor(
     var multiplicateurCritique:Int,
     var activationCritique:Int,
 
-    @OneToMany(mappedBy = "armes")
+    @OneToMany(mappedBy = "armetype")
     var armes: List<Arme>?= mutableListOf()
 ) {
 }
