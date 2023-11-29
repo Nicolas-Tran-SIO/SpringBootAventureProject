@@ -25,3 +25,12 @@ import jakarta.persistence.*
 //Chemin vers l'image de l'item
         var cheminImage:String?
     )
+    {
+        /**
+         * Méthode abstraite permettant d'utiliser l'objet sur une cible (personnage).
+         *
+         * @param cible Le personnage sur lequel l'objet est utilisé.
+         */
+        abstract fun utiliser(cible: Personnage):String
+
+    }

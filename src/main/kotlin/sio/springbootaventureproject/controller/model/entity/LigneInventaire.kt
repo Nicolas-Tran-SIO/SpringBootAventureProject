@@ -16,6 +16,8 @@ class LigneInventaire (
     @ManyToOne
     @JoinColumn(name= "item_id")
     var item: Item? = null,
+
+    var quantite: Int
 )
 {
 

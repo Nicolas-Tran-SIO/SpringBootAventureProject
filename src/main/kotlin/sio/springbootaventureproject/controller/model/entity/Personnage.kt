@@ -8,8 +8,6 @@ class Personnage constructor(
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     var id:Long? = null,
     var nom:String,
-    var pointDeVie:Int,
-    var pointDeVieMax:Int,
     var attaque:Int,
     var defense:Int,
     var endurance:Int,
@@ -29,11 +27,75 @@ class Personnage constructor(
     var accessoire: Accessoire?=null,
 
     @OneToMany(mappedBy = "personnage")
-    val ligneItem: List<LigneInventaire> = mutableListOf(),
+    val ligneItem: MutableList<LigneInventaire> = mutableListOf(),
 
     @ManyToOne
     @JoinColumn(name = "utilisateurId")
     var utilisateur: Utilisateur
-    ){
+    ) {
+    val pointDeVieMax: Int
+        get() = 50 + (10 * (this.endurance))
+
+    var pointDeVie: Int = this.pointDeVieMax
+        set(value) {
+            field = minOf(value, this.pointDeVieMax)
+
+        }
+    open fun attaquer(adversaire: Personnage):String {
+        // Vérifier si le personnage a une arme équipée
+        var degats = this.attaque / 2
+        if (arme != null) {
+            // Calculer les dégâts en utilisant les attributs du personnage et la méthode calculerDegat de l'arme
+            degats += this.arme!!.calculerDegats()
+        }
+        // Appliquer la défense de l'adversaire (au minimum au moins 1 de dégat)
+        val degatsInfliges = maxOf(1, degats - adversaire.calculeDefense())
+
+
+        // Appliquer les dégâts à l'adversaire
+        adversaire.pointDeVie = adversaire.pointDeVie - degatsInfliges
+
+        return("$nom attaque ${adversaire.nom} avec ${arme?.nom ?: "une attaque de base"} et inflige $degatsInfliges points de dégâts.")
+    }
+
+    fun calculeDefense(): Int {
+        var resultat = this.defense / 2
+        val scoreArmure =
+            (this.armure?.armuretype?.bonusType ?: 0) + (this.armure?.qualite?.bonusQualite ?: 0)
+        resultat += scoreArmure
+        return resultat;
+
+    }
+
+    /**
+     * Ajoute une ligne d'inventaire pour l'item spécifié avec la quantité donnée.
+     * Si une ligne d'inventaire pour cet item existe déjà, met à jour la quantité.
+     * Si la quantité résultante est inférieure ou égale à zéro, la ligne d'inventaire est supprimée.
+     *
+     * @param unItem L'item pour lequel ajouter ou mettre à jour la ligne d'inventaire.
+     * @param uneQuantite La quantité à ajouter à la ligne d'inventaire existante ou à la nouvelle ligne.
+     */
+    fun ajouterLigneInventaire(unItem: Item, uneQuantite: Int) {
+        // Chercher une ligne d'inventaire existante pour l'item spécifié
+        val ligneItem = this.ligneItem.find { ligneInventaire -> ligneInventaire.item == unItem }
+
+        // Si aucune ligne d'inventaire n'est trouvée, en créer une nouvelle
+        if (ligneItem == null) {
+            // Créer un nouvel identifiant pour la ligne d'inventaire
+            val ligneInventaireId = LigneInventaireId(this.id!!, unItem.id!!)
+
+            // Ajouter une nouvelle ligne d'inventaire à la liste
+            this.ligneItem.add(LigneInventaire(ligneInventaireId, this,unItem,uneQuantite))
+        } else {
+            // Si une ligne d'inventaire existante est trouvée, mettre à jour la quantité
+            ligneItem.quantite += uneQuantite
+
+            // Si la quantité résultante est inférieure ou égale à zéro, supprimer la ligne d'inventaire
+            if (ligneItem.quantite <= 0) {
+                this.ligneItem.remove(ligneItem)
+            }
+        }
+    }
+
 
 }
