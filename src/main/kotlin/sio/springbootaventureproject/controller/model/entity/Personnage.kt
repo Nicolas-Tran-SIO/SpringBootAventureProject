@@ -96,6 +96,39 @@ class Personnage constructor(
             }
         }
     }
+    /**
+     * Loot l'inventaire de la cible en transférant les items et équipements dans l'inventaire du looteur.
+     *
+     * @param cible Le personnage dont l'inventaire sera looted.
+     * @return Un message décrivant les items looted et les actions effectuées.
+     */
+    fun loot(cible: Personnage): String {
+        // Déséquiper l'arme et l'armure de la cible
+        cible.arme = null
+        cible.armure = null
+        // Variable pour stocker les messages générés pendant le loot
+        var msg = ""
+        // Parcourir chaque ligne d'inventaire de la cible
+        for (uneLigne: LigneInventaire in cible.ligneItem) {
+            // Ajouter les items et quantités lootés à l'inventaire du looteur
+            this.ajouterLigneInventaire(uneLigne.item!!, uneLigne.quantite)
+
+            // Construire un message décrivant l'action pour chaque item looté
+            msg += "${this.nom} récupère ${uneLigne.quantite} ${uneLigne.item} <br>"
+        }
+        // Retourner le message global décrivant l'action de loot
+        return msg
+    }
+    /**
+     * Vérification si le personnage a une potion dans son inventaire.
+     *
+     * @return true si le personnage a une potion, false sinon.
+     */
+    fun aUnePotion(): Boolean {
+        // Utiliser la méthode any pour vérifier si une ligne d'inventaire contient une Potion
+        return this.ligneItem.any { ligneInventaire -> ligneInventaire.item is Potion }
+    }
+
 
 
 }

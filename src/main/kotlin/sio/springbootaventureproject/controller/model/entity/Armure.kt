@@ -25,6 +25,14 @@ class Armure constructor(
     @OneToMany(mappedBy ="armure")
     var personnages: List<Personnage>? = null
 ) : Item(id, nom, description, cheminImage) {
+    /**
+     * Équipe l'arme sur un personnage, permettant au personnage de l'utiliser pour attaquer.
+     *
+     * @param cible Le personnage sur lequel l'arme est équipée.
+     */
+    override fun utiliser(cible: Personnage):String {
+        return cible.equipe(this)
+    }
 
 
 }
