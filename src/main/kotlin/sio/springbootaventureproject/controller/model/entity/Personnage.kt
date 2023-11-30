@@ -129,6 +129,71 @@ class Personnage constructor(
         return this.ligneItem.any { ligneInventaire -> ligneInventaire.item is Potion }
     }
 
+    fun equipe(uneArme: Arme): String{
+        var msg:String
+        // Utiliser la méthode any pour vérifier si une ligne d'inventaire contient une Arme
+        if(this.ligneItem.any { ligneInventaire -> ligneInventaire.item is Arme }){
+            this.arme=uneArme
+            msg="${uneArme.nom} est equiper par ${this.nom}<br>"
+        }
+        else{
+            msg="Action impossible <br>"
+        }
+        return msg
+    }
+    fun equipe(uneArmure: Armure): String{
+        var msg:String
+        // Utiliser la méthode any pour vérifier si une ligne d'inventaire contient une Arme
+        if(this.ligneItem.any { ligneInventaire -> ligneInventaire.item is Armure }){
+            this.armure=uneArmure
+            msg="${uneArmure.nom} est equiper par ${this.nom}<br>"
+        }
+        else{
+            msg="Action impossible <br>"
+        }
+        return msg
+    }
+    fun equipe(unAccessoire: Accessoire): String{
+        var msg:String
+        // Utiliser la méthode any pour vérifier si une ligne d'inventaire contient une Arme
+        if(this.ligneItem.any { ligneInventaire -> ligneInventaire.item is Accessoire }){
+            this.accessoire=unAccessoire
+            msg="${unAccessoire.nom} est equiper par ${this.nom}<br>"
+        }
+        else{
+            msg="Action impossible <br>"
+        }
+        return msg
+    }
 
+    /**
+     * Méthode pour boire une potion de l'inventaire du personnage.
+     *
+     * @param consomer Spécifie si la potion doit être consommée (décrémentant la quantité) ou non.
+     *                 Par défaut, la potion est consommée.
+     * @return Un message décrivant l'action effectuée, tel que boire la potion ou l'absence de potion.
+     */
+    fun boirePotion(consomer: Boolean = true): String {
+        // Message par défaut si le personnage n'a pas de potion dans son inventaire
+        var msg = "$nom n'a pas de potion dans son inventaire."
+
+        // Vérifier si le personnage a une potion dans son inventaire
+        if (this.aUnePotion()) {
+            // Filtrer les lignes d'inventaire pour obtenir celles qui contiennent des potions
+            val lignePotions: List<LigneInventaire> =
+                this.ligneItem.filter { ligneInventaire -> ligneInventaire.item is Potion }
+
+            // Utiliser la première potion dans la liste et obtenir le message résultant de l'utilisation
+            msg = lignePotions[0].item!!.utiliser(this)
+
+            // Si consomer est false, augmenter la quantité de potions dans l'inventaire
+            if (!consomer) {
+                lignePotions[0].quantite += 1
+            }
+        }
+
+        // Retourner le message décrivant l'action effectuée
+        return msg
+    }
 
 }
